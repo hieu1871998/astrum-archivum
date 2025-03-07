@@ -1,0 +1,43 @@
+{
+	"name": "@astranova/prisma",
+	"version": "1.0.0",
+	"exports": {
+		".": {
+			"import": "./src/client.ts",
+			"types": "./src/client.ts"
+		}
+	},
+	"scripts": {
+		"check-types": "tsc --noEmit",
+		"db:migrate:deploy": "prisma migrate deploy",
+		"db:migrate:dev": "prisma migrate dev",
+		"db:push": "prisma db push",
+		"db:seed": "tsx src/seed.ts",
+		"predev": "npm run generate",
+		"dev": "tsup src/* --watch",
+		"format": "prisma format",
+		"generate": "prisma generate",
+		"lint": "eslint . --max-warnings 0",
+		"prebuild": "npm run generate",
+		"studio": "prisma studio"
+	},
+	"dependencies": {
+		"@prisma/client": "^6.4.1",
+		"tslib": "^2.8.1"
+	},
+	"devDependencies": {
+		"@astranova/eslint-config": "workspace:*",
+		"@astranova/typescript-config": "workspace:*",
+		"@types/node": "^22.13.9",
+		"eslint": "^9.21.0",
+		"eslint-config-prettier": "^10.0.2",
+		"eslint-plugin-prettier": "^5.2.3",
+		"globals": "^16.0.0",
+		"prisma": "^6.4.1",
+		"rimraf": "^6.0.1",
+		"tsup": "^8.4.0",
+		"tsx": "4.19.3",
+		"typescript": "5.8.2",
+		"typescript-eslint": "^8.26.0"
+	}
+}

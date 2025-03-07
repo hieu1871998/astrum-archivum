@@ -1,5 +1,7 @@
 {
 	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": ["**/.env.*local"],
+	"globalEnv": ["NODE_ENV", "DATABASE_URL"],
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
@@ -9,13 +11,37 @@
 		"check-types": {
 			"dependsOn": ["^check-types"]
 		},
+		"db:migrate:deploy": {
+			"cache": false
+		},
+		"db:migrate:dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"db:push": {
+			"cache": false
+		},
+		"db:seed": {
+			"cache": false
+		},
 		"dev": {
 			"cache": false,
 			"persistent": true
 		},
+		"generate": {
+			"cache": false,
+			"dependsOn": ["^generate"]
+		},
 		"lint": {
-			"dependsOn": ["^lint"]
-		}
+			"dependsOn": ["^lint"],
+			"env": ["PORT"]
+		},
+		"start:dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"test": {},
+		"test:e2e": {}
 	},
 	"ui": "tui"
 }

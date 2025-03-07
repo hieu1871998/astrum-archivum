@@ -1,20 +1,27 @@
 {
-  "name": "astrum-archivum",
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
-  },
-  "devDependencies": {
-    "prettier": "^3.5.3",
-    "turbo": "^2.4.4",
-    "typescript": "5.8.2"
-  },
-  "packageManager": "pnpm@9.0.0",
-  "engines": {
-    "node": ">=18"
-  }
+	"name": "astrum-archivum",
+	"private": true,
+	"scripts": {
+		"build": "turbo run build",
+		"check-types": "turbo run check-types",
+		"db:migrate:deploy": "turbo run db:migrate:deploy",
+		"db:migrate:dev": "turbo run db:migrate:dev",
+		"db:push": "turbo run db:push",
+		"db:seed": "turbo run db:seed",
+		"dev": "turbo run dev",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"generate": "turbo run generate",
+		"lint": "turbo run lint",
+		"start:dev": "turbo start:dev"
+	},
+	"devDependencies": {
+		"prettier": "^3.5.3",
+		"prettier-plugin-packagejson": "^2.5.10",
+		"turbo": "^2.4.4",
+		"typescript": "5.8.2"
+	},
+	"packageManager": "pnpm@9.0.0",
+	"engines": {
+		"node": ">=18"
+	}
 }
