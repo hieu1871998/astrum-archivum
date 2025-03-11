@@ -1,0 +1,27 @@
+{
+	"name": "@astranova/types",
+	"version": "1.0.0",
+	"description": "",
+	"keywords": [],
+	"license": "ISC",
+	"author": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"zod": "^3.24.2",
+		"zod-prisma-types": "^3.2.4"
+	},
+	"devDependencies": {
+		"@astranova/eslint-config": "workspace:*",
+		"@astranova/typescript-config": "workspace:*",
+		"@types/node": "^22.13.10",
+		"eslint": "^9.22.0",
+		"globals": "^16.0.0",
+		"prisma": "^5.18.0",
+		"tsx": "4.19.3",
+		"typescript": "5.8.2",
+		"typescript-eslint": "^8.26.0"
+	}
+}

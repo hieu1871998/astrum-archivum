@@ -1,0 +1,14 @@
+export { AggregateBudgetArgs } from "./AggregateBudgetArgs";
+export { CreateManyBudgetArgs } from "./CreateManyBudgetArgs";
+export { CreateOneBudgetArgs } from "./CreateOneBudgetArgs";
+export { DeleteManyBudgetArgs } from "./DeleteManyBudgetArgs";
+export { DeleteOneBudgetArgs } from "./DeleteOneBudgetArgs";
+export { FindFirstBudgetArgs } from "./FindFirstBudgetArgs";
+export { FindFirstBudgetOrThrowArgs } from "./FindFirstBudgetOrThrowArgs";
+export { FindManyBudgetArgs } from "./FindManyBudgetArgs";
+export { FindUniqueBudgetArgs } from "./FindUniqueBudgetArgs";
+export { FindUniqueBudgetOrThrowArgs } from "./FindUniqueBudgetOrThrowArgs";
+export { GroupByBudgetArgs } from "./GroupByBudgetArgs";
+export { UpdateManyBudgetArgs } from "./UpdateManyBudgetArgs";
+export { UpdateOneBudgetArgs } from "./UpdateOneBudgetArgs";
+export { UpsertOneBudgetArgs } from "./UpsertOneBudgetArgs";

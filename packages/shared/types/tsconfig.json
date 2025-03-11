@@ -1,0 +1,9 @@
+{
+	"extends": "@astranova/typescript-config/base.json",
+	"include": ["global.d.ts", "**/*.ts", "**/*.tsx", "tsup.config.ts"],
+	"compilerOptions": {
+		"strict": true,
+		"strictNullChecks": true
+	},
+	"exclude": ["node_modules"]
+}

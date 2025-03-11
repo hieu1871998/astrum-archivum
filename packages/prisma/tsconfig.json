@@ -1,5 +1,12 @@
 {
 	"extends": "@astranova/typescript-config/base.json",
 	"include": ["global.d.ts", "**/*.ts", "**/*.tsx", "tsup.config.ts"],
+	"compilerOptions": {
+		"strict": true,
+		"target": "ESNext",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"strictNullChecks": true
+	},
 	"exclude": ["node_modules"]
 }

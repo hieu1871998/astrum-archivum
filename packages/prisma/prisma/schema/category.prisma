@@ -1,0 +1,13 @@
+model Category {
+  id               String        @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  icon             String?
+  color            String?
+  parentCategory   Category?     @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parentCategoryId String?       @db.ObjectId
+  subcategories    Category[]    @relation("CategoryHierarchy")
+  transactions     Transaction[]
+  Budget           Budget[]
+
+  @@map("categories")
+}

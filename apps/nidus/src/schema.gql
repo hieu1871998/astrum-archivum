@@ -1,0 +1,163 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Account {
+  """Account identifier"""
+  id: String!
+
+  """Creation date"""
+  createdAt: DateTime!
+
+  """Account currency"""
+  currency: Currency!
+
+  """Account name"""
+  name: String!
+
+  """Account type"""
+  type: AccountType!
+
+  """Last updated date"""
+  updatedAt: DateTime!
+
+  """User identifier"""
+  userId: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum Currency {
+  VND
+  USD
+}
+
+enum AccountType {
+  BANK
+  CREDIT
+  WALLET
+}
+
+type Budget {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Transaction {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type User {
+  """User identifier"""
+  id: String!
+
+  """User email"""
+  email: String!
+
+  """User name"""
+  name: String
+
+  """User password"""
+  password: String!
+
+  """Creation date"""
+  createdAt: DateTime!
+
+  """Last updated date"""
+  updatedAt: DateTime!
+
+  """User accounts"""
+  accounts: [Account!]!
+
+  """User transactions"""
+  transactions: [Transaction!]!
+
+  """User budgets"""
+  budgets: [Budget!]!
+}
+
+type Query {
+  users: [User!]!
+  user(id: String!): User!
+  accounts: [Account!]!
+  account(id: Int!): Account!
+  transactions: [Transaction!]!
+  transaction(id: Int!): Transaction!
+  budgets: [Budget!]!
+  budget(id: Int!): Budget!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
+  removeUser(id: String!): User!
+  createAccount(createAccountInput: CreateAccountInput!): Account!
+  updateAccount(id: String!, updateAccountInput: UpdateAccountInput!): Account!
+  removeAccount(id: Int!): Account!
+  createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
+  updateTransaction(updateTransactionInput: UpdateTransactionInput!): Transaction!
+  removeTransaction(id: Int!): Transaction!
+  createBudget(createBudgetInput: CreateBudgetInput!): Budget!
+  updateBudget(updateBudgetInput: UpdateBudgetInput!): Budget!
+  removeBudget(id: Int!): Budget!
+}
+
+input CreateUserInput {
+  """User email"""
+  email: String!
+
+  """User name"""
+  name: String!
+
+  """User password"""
+  password: String!
+}
+
+input UpdateUserInput {
+  """User email"""
+  email: String
+
+  """User name"""
+  name: String
+
+  """User password"""
+  password: String
+  id: Int!
+}
+
+input CreateAccountInput {
+  currency: Currency!
+  name: String!
+  type: AccountType!
+}
+
+input UpdateAccountInput {
+  currency: Currency!
+  name: String!
+}
+
+input CreateTransactionInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateTransactionInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateBudgetInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateBudgetInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}

@@ -1,0 +1,40 @@
+{
+	"name": "@astranova/graphql",
+	"version": "1.0.0",
+	"exports": {
+		".": {
+			"import": "./src/client.ts",
+			"types": "./src/client.ts"
+		},
+		"./generated": {
+			"import": "./generated/index.js",
+			"types": "./generated/index.d.ts"
+		}
+	},
+	"dependencies": {
+		"@prisma/client": "^5.18.0",
+		"graphql": "^16.10.0",
+		"graphql-scalars": "^1.24.1",
+		"reflect-metadata": "^0.2.2",
+		"tslib": "^2.8.1",
+		"type-graphql": "2.0.0-rc.2",
+		"typegraphql-prisma": "^0.28.0",
+		"zod": "^3.24.2",
+		"zod-prisma-types": "^3.2.4"
+	},
+	"devDependencies": {
+		"@astranova/eslint-config": "workspace:*",
+		"@astranova/typescript-config": "workspace:*",
+		"@types/node": "^22.13.10",
+		"eslint": "^9.22.0",
+		"eslint-config-prettier": "^10.1.1",
+		"eslint-plugin-prettier": "^5.2.3",
+		"globals": "^16.0.0",
+		"prisma": "^5.18.0",
+		"rimraf": "^6.0.1",
+		"tsup": "^8.4.0",
+		"tsx": "4.19.3",
+		"typescript": "5.8.2",
+		"typescript-eslint": "^8.26.0"
+	}
+}

@@ -1,0 +1,8 @@
+model Tag {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  transactions   Transaction[] @relation(fields: [transactionIds], references: [id])
+  transactionIds String[]      @db.ObjectId
+
+  @@map("tags")
+}

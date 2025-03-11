@@ -1,0 +1,35 @@
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateBudgetArgs } from "./args/AggregateBudgetArgs";
+import { CreateManyBudgetArgs } from "./args/CreateManyBudgetArgs";
+import { CreateOneBudgetArgs } from "./args/CreateOneBudgetArgs";
+import { DeleteManyBudgetArgs } from "./args/DeleteManyBudgetArgs";
+import { DeleteOneBudgetArgs } from "./args/DeleteOneBudgetArgs";
+import { FindFirstBudgetArgs } from "./args/FindFirstBudgetArgs";
+import { FindFirstBudgetOrThrowArgs } from "./args/FindFirstBudgetOrThrowArgs";
+import { FindManyBudgetArgs } from "./args/FindManyBudgetArgs";
+import { FindUniqueBudgetArgs } from "./args/FindUniqueBudgetArgs";
+import { FindUniqueBudgetOrThrowArgs } from "./args/FindUniqueBudgetOrThrowArgs";
+import { GroupByBudgetArgs } from "./args/GroupByBudgetArgs";
+import { UpdateManyBudgetArgs } from "./args/UpdateManyBudgetArgs";
+import { UpdateOneBudgetArgs } from "./args/UpdateOneBudgetArgs";
+import { UpsertOneBudgetArgs } from "./args/UpsertOneBudgetArgs";
+import { Budget } from "../../../models/Budget";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateBudget } from "../../outputs/AggregateBudget";
+import { BudgetGroupBy } from "../../outputs/BudgetGroupBy";
+export declare class BudgetCrudResolver {
+    aggregateBudget(ctx: any, info: GraphQLResolveInfo, args: AggregateBudgetArgs): Promise<AggregateBudget>;
+    createManyBudget(ctx: any, info: GraphQLResolveInfo, args: CreateManyBudgetArgs): Promise<AffectedRowsOutput>;
+    createOneBudget(ctx: any, info: GraphQLResolveInfo, args: CreateOneBudgetArgs): Promise<Budget>;
+    deleteManyBudget(ctx: any, info: GraphQLResolveInfo, args: DeleteManyBudgetArgs): Promise<AffectedRowsOutput>;
+    deleteOneBudget(ctx: any, info: GraphQLResolveInfo, args: DeleteOneBudgetArgs): Promise<Budget | null>;
+    findFirstBudget(ctx: any, info: GraphQLResolveInfo, args: FindFirstBudgetArgs): Promise<Budget | null>;
+    findFirstBudgetOrThrow(ctx: any, info: GraphQLResolveInfo, args: FindFirstBudgetOrThrowArgs): Promise<Budget | null>;
+    budgets(ctx: any, info: GraphQLResolveInfo, args: FindManyBudgetArgs): Promise<Budget[]>;
+    budget(ctx: any, info: GraphQLResolveInfo, args: FindUniqueBudgetArgs): Promise<Budget | null>;
+    getBudget(ctx: any, info: GraphQLResolveInfo, args: FindUniqueBudgetOrThrowArgs): Promise<Budget | null>;
+    groupByBudget(ctx: any, info: GraphQLResolveInfo, args: GroupByBudgetArgs): Promise<BudgetGroupBy[]>;
+    updateManyBudget(ctx: any, info: GraphQLResolveInfo, args: UpdateManyBudgetArgs): Promise<AffectedRowsOutput>;
+    updateOneBudget(ctx: any, info: GraphQLResolveInfo, args: UpdateOneBudgetArgs): Promise<Budget | null>;
+    upsertOneBudget(ctx: any, info: GraphQLResolveInfo, args: UpsertOneBudgetArgs): Promise<Budget>;
+}
