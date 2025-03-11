@@ -3,7 +3,7 @@ import {
 	AccountType,
 	Currency,
 } from '@astranova/prisma';
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 
 registerEnumType(Currency, { name: 'Currency' });
 
@@ -11,7 +11,7 @@ registerEnumType(AccountType, { name: 'AccountType' });
 
 @ObjectType()
 export class Account implements AccountModel {
-	@Field(() => String, { description: 'Account identifier' })
+	@Field(() => ID, { description: 'Account identifier' })
 	id: string;
 
 	@Field(() => Date, { description: 'Creation date' })
@@ -29,6 +29,6 @@ export class Account implements AccountModel {
 	@Field(() => Date, { description: 'Last updated date' })
 	updatedAt: Date;
 
-	@Field(() => String, { description: 'User identifier' })
+	@Field(() => ID, { description: 'User identifier' })
 	userId: string;
 }

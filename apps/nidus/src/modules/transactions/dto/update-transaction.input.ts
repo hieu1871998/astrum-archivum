@@ -1,8 +1,13 @@
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+
 import { CreateTransactionInput } from './create-transaction.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateTransactionInput extends PartialType(CreateTransactionInput) {
-  @Field(() => Int)
-  id: number;
+export class UpdateTransactionInput
+	extends PartialType(CreateTransactionInput)
+	implements Prisma.TransactionUpdateInput
+{
+	@Field(() => String)
+	id: string;
 }

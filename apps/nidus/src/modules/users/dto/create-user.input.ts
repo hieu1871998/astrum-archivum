@@ -3,12 +3,12 @@ import { Prisma } from '@prisma/client';
 
 @InputType()
 export class CreateUserInput implements Prisma.UserCreateInput {
-	@Field(() => String, { description: 'User email' })
+	@Field(() => String)
 	email: string;
 
-	@Field(() => String, { description: 'User name' })
+	@Field(() => String)
 	name?: string;
 
-	@Field(() => String, { description: 'User password' })
+	@Field(() => String)
 	password: string;
 }

@@ -16,6 +16,7 @@
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
 		"generate": "turbo generate",
 		"lint": "turbo lint",
+		"lint:fix": "turbo lint:fix",
 		"nest:generate": "turbo nest:generate",
 		"start:dev": "turbo start:dev"
 	},

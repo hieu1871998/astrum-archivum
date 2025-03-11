@@ -1,11 +1,13 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { Currency, Prisma } from '@prisma/client';
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Prisma } from '@prisma/client';
+
+import { CreateAccountInput } from './create-account.input';
 
 @InputType()
-export class UpdateAccountInput implements Prisma.AccountUpdateInput {
-	@Field(() => Currency)
-	currency?: Currency;
-
+export class UpdateAccountInput
+	extends PartialType(CreateAccountInput)
+	implements Prisma.AccountUpdateInput
+{
 	@Field(() => String)
-	name?: string;
+	id: string;
 }

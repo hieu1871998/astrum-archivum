@@ -1,4 +1,5 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, type TestingModule } from '@nestjs/testing';
+
 import { TransactionsResolver } from './transactions.resolver';
 import { TransactionsService } from './transactions.service';
 

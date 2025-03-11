@@ -18,6 +18,10 @@ export const nextConfig = [
 			globals: {
 				...globals.serviceworker,
 			},
+			parserOptions: {
+				projectService: true,
+				tsconfigRootDir: import.meta.dirname,
+			},
 		},
 	},
 	{

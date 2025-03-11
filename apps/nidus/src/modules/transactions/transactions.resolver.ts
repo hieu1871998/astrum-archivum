@@ -1,35 +1,55 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { TransactionsService } from './transactions.service';
-import { Transaction } from './entities/transaction.entity';
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { UpdateTransactionInput } from './dto/update-transaction.input';
+import { Transaction } from './entities/transaction.entity';
+import { TransactionsService } from './transactions.service';
 
 @Resolver(() => Transaction)
 export class TransactionsResolver {
-  constructor(private readonly transactionsService: TransactionsService) {}
+	constructor(private readonly transactionsService: TransactionsService) {}
 
-  @Mutation(() => Transaction)
-  createTransaction(@Args('createTransactionInput') createTransactionInput: CreateTransactionInput) {
-    return this.transactionsService.create(createTransactionInput);
-  }
+	@Mutation(() => Transaction)
+	async createTransaction(
+		@Args('createTransactionInput')
+		createTransactionInput: CreateTransactionInput,
+	) {
+		return this.transactionsService.create(createTransactionInput);
+	}
 
-  @Query(() => [Transaction], { name: 'transactions' })
-  findAll() {
-    return this.transactionsService.findAll();
-  }
+	@Query(() => [Transaction], { name: 'transactions' })
+	async findAll() {
+		return this.transactionsService.findAll();
+	}
 
-  @Query(() => Transaction, { name: 'transaction' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.transactionsService.findOne(id);
-  }
+	@Query(() => Transaction, { name: 'transaction' })
+	async findOne(@Args('id', { type: () => Int }) id: string) {
+		return this.transactionsService.findOne(id);
+	}
 
-  @Mutation(() => Transaction)
-  updateTransaction(@Args('updateTransactionInput') updateTransactionInput: UpdateTransactionInput) {
-    return this.transactionsService.update(updateTransactionInput.id, updateTransactionInput);
-  }
+	@Mutation(() => Transaction)
+	async updateTransaction(
+		@Args('updateTransactionInput')
+		updateTransactionInput: UpdateTransactionInput,
+	) {
+		return this.transactionsService.update(
+			updateTransactionInput.id,
+			updateTransactionInput,
+		);
+	}
 
-  @Mutation(() => Transaction)
-  removeTransaction(@Args('id', { type: () => Int }) id: number) {
-    return this.transactionsService.remove(id);
-  }
+	@Mutation(() => Transaction)
+	async removeTransaction(@Args('id', { type: () => ID }) id: string) {
+		return this.transactionsService.remove(id);
+	}
+
+	@Query(() => [Transaction], { name: 'userTransactions' })
+	async findAllByUserId(@Args('id', { type: () => ID }) id: string) {
+		return this.transactionsService.findAllByUserId(id);
+	}
+
+	@Query(() => [Transaction], { name: 'accountTransactions' })
+	async findAllByAccountId(@Args('id', { type: () => ID }) id: string) {
+		return this.transactionsService.findAllByAccountId(id);
+	}
 }

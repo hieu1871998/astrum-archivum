@@ -1,8 +1,9 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int,Mutation, Query, Resolver } from '@nestjs/graphql';
+
 import { BudgetsService } from './budgets.service';
-import { Budget } from './entities/budget.entity';
 import { CreateBudgetInput } from './dto/create-budget.input';
 import { UpdateBudgetInput } from './dto/update-budget.input';
+import { Budget } from './entities/budget.entity';
 
 @Resolver(() => Budget)
 export class BudgetsResolver {

@@ -9,23 +9,44 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 export class AccountsService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	create(createAccountInput: CreateAccountInput) {
+	async create(createAccountInput: CreateAccountInput) {
 		return this.prisma.account.create({ data: createAccountInput });
 	}
 
-	findAll() {
-		return `This action returns all accounts`;
+	async findAll() {
+		return this.prisma.account.findMany();
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} account`;
+	async findOne(id: string) {
+		return this.prisma.account.findUnique({
+			where: { id },
+		});
 	}
 
-	update(id: string, updateAccountInput: UpdateAccountInput) {
-		return `This action updates a #${id} account`;
+	async update(id: string, updateAccountInput: UpdateAccountInput) {
+		return this.prisma.account.update({
+			where: { id },
+			data: updateAccountInput,
+		});
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} account`;
+	async remove(id: string) {
+		return this.prisma.account.delete({
+			where: { id },
+		});
+	}
+
+	async findAllByUserId(userId: string) {
+		return this.prisma.account.findMany({
+			where: { userId },
+			include: {
+				transactions: {
+					include: {
+						category: true,
+						tags: true,
+					},
+				},
+			},
+		});
 	}
 }

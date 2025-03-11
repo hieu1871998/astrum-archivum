@@ -2,9 +2,78 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Transaction {
+  """Transaction ID"""
+  id: ID!
+
+  """Account ID"""
+  accountId: ID!
+
+  """Transaction amount"""
+  amount: Int!
+
+  """Category ID"""
+  categoryId: ID!
+
+  """Creation date"""
+  createdAt: DateTime!
+  currency: Currency!
+
+  """Custom icon"""
+  customIcon: String
+
+  """Transaction date"""
+  date: DateTime!
+
+  """Transaction description"""
+  description: String
+
+  """Transaction notes"""
+  notes: String
+
+  """Recurring transaction ID"""
+  recurrence: RecurrenceType!
+
+  """Recurring transaction ID"""
+  tagIds: [String!]!
+
+  """Transaction type"""
+  type: TransactionType!
+
+  """Last updated date"""
+  updatedAt: DateTime!
+
+  """User ID"""
+  userId: ID!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum Currency {
+  VND
+  USD
+}
+
+"""Recurrence type for transactions"""
+enum RecurrenceType {
+  OFF
+  REPEAT
+  INSTALLMENT
+}
+
+"""Type of transaction"""
+enum TransactionType {
+  INCOME
+  EXPENSE
+  TRANSFER
+}
+
 type Account {
   """Account identifier"""
-  id: String!
+  id: ID!
 
   """Creation date"""
   createdAt: DateTime!
@@ -22,17 +91,8 @@ type Account {
   updatedAt: DateTime!
 
   """User identifier"""
-  userId: String!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-enum Currency {
-  VND
-  USD
+  userId: ID!
+  transactions: [Transaction!]!
 }
 
 enum AccountType {
@@ -46,14 +106,9 @@ type Budget {
   exampleField: Int!
 }
 
-type Transaction {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 type User {
   """User identifier"""
-  id: String!
+  id: ID!
 
   """User email"""
   email: String!
@@ -82,51 +137,43 @@ type User {
 
 type Query {
   users: [User!]!
-  user(id: String!): User!
+  user(id: ID!): User!
   accounts: [Account!]!
-  account(id: Int!): Account!
+  account(id: ID!): Account!
   transactions: [Transaction!]!
   transaction(id: Int!): Transaction!
+  userTransactions(id: ID!): [Transaction!]!
+  accountTransactions(id: ID!): [Transaction!]!
   budgets: [Budget!]!
   budget(id: Int!): Budget!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
-  removeUser(id: String!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: ID!): User!
   createAccount(createAccountInput: CreateAccountInput!): Account!
-  updateAccount(id: String!, updateAccountInput: UpdateAccountInput!): Account!
-  removeAccount(id: Int!): Account!
+  updateAccount(updateAccountInput: UpdateAccountInput!): Account!
+  removeAccount(id: ID!): Account!
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   updateTransaction(updateTransactionInput: UpdateTransactionInput!): Transaction!
-  removeTransaction(id: Int!): Transaction!
+  removeTransaction(id: ID!): Transaction!
   createBudget(createBudgetInput: CreateBudgetInput!): Budget!
   updateBudget(updateBudgetInput: UpdateBudgetInput!): Budget!
   removeBudget(id: Int!): Budget!
 }
 
 input CreateUserInput {
-  """User email"""
   email: String!
-
-  """User name"""
   name: String!
-
-  """User password"""
   password: String!
 }
 
 input UpdateUserInput {
-  """User email"""
   email: String
-
-  """User name"""
   name: String
-
-  """User password"""
   password: String
-  id: Int!
+  id: String!
 }
 
 input CreateAccountInput {
@@ -136,19 +183,44 @@ input CreateAccountInput {
 }
 
 input UpdateAccountInput {
-  currency: Currency!
-  name: String!
+  currency: Currency
+  name: String
+  type: AccountType
+  id: String!
 }
 
 input CreateTransactionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  account: AccountType!
+  amount: Float!
+  category: CreateCategoryInput!
+  currency: Currency!
+  customIcon: String
+  date: DateTime!
+  description: String
+  notes: String
+  recurrence: RecurrenceType!
+  type: TransactionType!
+  user: CreateUserInput!
+}
+
+input CreateCategoryInput {
+  name: String!
+  icon: String
 }
 
 input UpdateTransactionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  account: AccountType
+  amount: Float
+  category: CreateCategoryInput
+  currency: Currency
+  customIcon: String
+  date: DateTime
+  description: String
+  notes: String
+  recurrence: RecurrenceType
+  type: TransactionType
+  user: CreateUserInput
+  id: String!
 }
 
 input CreateBudgetInput {

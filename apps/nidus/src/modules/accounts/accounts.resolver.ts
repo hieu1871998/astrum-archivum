@@ -1,5 +1,15 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+	Args,
+	ID,
+	Mutation,
+	Parent,
+	Query,
+	ResolveField,
+	Resolver,
+} from '@nestjs/graphql';
 
+import { Transaction } from '../transactions/entities/transaction.entity';
+import { TransactionsService } from '../transactions/transactions.service';
 import { AccountsService } from './accounts.service';
 import { CreateAccountInput } from './dto/create-account.input';
 import { UpdateAccountInput } from './dto/update-account.input';
@@ -7,10 +17,13 @@ import { Account } from './entities/account.entity';
 
 @Resolver(() => Account)
 export class AccountsResolver {
-	constructor(private readonly accountsService: AccountsService) {}
+	constructor(
+		private readonly accountsService: AccountsService,
+		private readonly transactionsService: TransactionsService,
+	) {}
 
 	@Mutation(() => Account)
-	createAccount(
+	async createAccount(
 		@Args('createAccountInput', { type: () => CreateAccountInput })
 		createAccountInput: CreateAccountInput,
 	) {
@@ -18,26 +31,35 @@ export class AccountsResolver {
 	}
 
 	@Query(() => [Account], { name: 'accounts' })
-	findAll() {
+	async findAll() {
 		return this.accountsService.findAll();
 	}
 
 	@Query(() => Account, { name: 'account' })
-	findOne(@Args('id', { type: () => Int }) id: number) {
+	async findOne(@Args('id', { type: () => ID }) id: string) {
 		return this.accountsService.findOne(id);
 	}
 
 	@Mutation(() => Account)
-	updateAccount(
-		@Args('id') id: string,
+	async updateAccount(
 		@Args('updateAccountInput', { type: () => UpdateAccountInput })
 		updateAccountInput: UpdateAccountInput,
 	) {
-		return this.accountsService.update(id, updateAccountInput);
+		return this.accountsService.update(
+			updateAccountInput.id,
+			updateAccountInput,
+		);
 	}
 
 	@Mutation(() => Account)
-	removeAccount(@Args('id', { type: () => Int }) id: number) {
+	async removeAccount(@Args('id', { type: () => ID }) id: string) {
 		return this.accountsService.remove(id);
+	}
+
+	@ResolveField(() => [Transaction])
+	async transactions(@Parent() account: Account) {
+		const { id } = account;
+
+		return this.transactionsService.findAllByAccountId(id);
 	}
 }

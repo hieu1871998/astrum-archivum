@@ -1,5 +1,5 @@
 import { User as UserModel } from '@astranova/prisma';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from '@/modules/accounts/entities/account.entity';
 import { Budget } from '@/modules/budgets/entities/budget.entity';
@@ -7,7 +7,7 @@ import { Transaction } from '@/modules/transactions/entities/transaction.entity'
 
 @ObjectType()
 export class User implements UserModel {
-	@Field(() => String, { description: 'User identifier' })
+	@Field(() => ID, { description: 'User identifier' })
 	id: string;
 
 	@Field(() => String, { description: 'User email' })

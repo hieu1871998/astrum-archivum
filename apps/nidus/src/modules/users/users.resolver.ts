@@ -1,21 +1,30 @@
-import { UserCreateInputSchema } from '@astranova/validations';
-import { UsePipes } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+	Args,
+	ID,
+	Mutation,
+	Parent,
+	Query,
+	ResolveField,
+	Resolver,
+} from '@nestjs/graphql';
 
+import { AccountsService } from '../accounts/accounts.service';
+import { TransactionsService } from '../transactions/transactions.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 
-import { ZodValidationPipe } from '@/common/pipes/zod.pipe';
-
 @Resolver(() => User)
 export class UsersResolver {
-	constructor(private readonly usersService: UsersService) {}
+	constructor(
+		private readonly usersService: UsersService,
+		private readonly accountsService: AccountsService,
+		private readonly transactionsService: TransactionsService,
+	) {}
 
 	@Mutation(() => User)
-	@UsePipes(new ZodValidationPipe(UserCreateInputSchema))
-	createUser(
+	async createUser(
 		@Args('createUserInput', { type: () => CreateUserInput })
 		createUserInput: CreateUserInput,
 	) {
@@ -23,26 +32,39 @@ export class UsersResolver {
 	}
 
 	@Query(() => [User], { name: 'users' })
-	findAll() {
+	async findAll() {
 		return this.usersService.findAll();
 	}
 
 	@Query(() => User, { name: 'user' })
-	findOne(@Args('id', { type: () => String }) id: string) {
+	async findOne(@Args('id', { type: () => ID }) id: string) {
 		return this.usersService.findOne(id);
 	}
 
 	@Mutation(() => User)
-	updateUser(
-		@Args('id', { type: () => String }) id: string,
+	async updateUser(
 		@Args('updateUserInput', { type: () => UpdateUserInput })
 		updateUserInput: UpdateUserInput,
 	) {
-		return this.usersService.update(id, updateUserInput);
+		return this.usersService.update(updateUserInput.id, updateUserInput);
 	}
 
 	@Mutation(() => User)
-	removeUser(@Args('id', { type: () => String }) id: string) {
+	async removeUser(@Args('id', { type: () => ID }) id: string) {
 		return this.usersService.remove(id);
+	}
+
+	@ResolveField()
+	async accounts(@Parent() user: User) {
+		const { id } = user;
+
+		return this.accountsService.findAllByUserId(id);
+	}
+
+	@ResolveField()
+	async transactions(@Parent() user: User) {
+		const { id } = user;
+
+		return this.transactionsService.findAllByUserId(id);
 	}
 }

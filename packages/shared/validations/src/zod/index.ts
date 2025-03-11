@@ -28,19 +28,19 @@ export const QueryModeSchema = z.enum(['default','insensitive']);
 
 export const AccountTypeSchema = z.enum(['BANK','CREDIT','WALLET']);
 
-export type AccountTypeType = `${z.infer<typeof AccountTypeSchema>}`
+export type AccountTypeType = z.infer<typeof AccountTypeSchema>
 
 export const CurrencySchema = z.enum(['VND','USD']);
 
-export type CurrencyType = `${z.infer<typeof CurrencySchema>}`
+export type CurrencyType = z.infer<typeof CurrencySchema>
 
 export const TransactionTypeSchema = z.enum(['INCOME','EXPENSE','TRANSFER']);
 
-export type TransactionTypeType = `${z.infer<typeof TransactionTypeSchema>}`
+export type TransactionTypeType = z.infer<typeof TransactionTypeSchema>
 
 export const RecurrenceTypeSchema = z.enum(['OFF','REPEAT','INSTALLMENT']);
 
-export type RecurrenceTypeType = `${z.infer<typeof RecurrenceTypeSchema>}`
+export type RecurrenceTypeType = z.infer<typeof RecurrenceTypeSchema>
 
 /////////////////////////////////////////
 // MODELS

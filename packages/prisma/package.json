@@ -20,6 +20,7 @@
 		"format": "prisma format",
 		"postinstall": "pnpm db:generate",
 		"lint": "eslint . --max-warnings 0",
+		"lint:fix": "pnpm lint --fix",
 		"prebuild": "npm run generate",
 		"studio": "prisma studio"
 	},
