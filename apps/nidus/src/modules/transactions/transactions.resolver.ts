@@ -1,11 +1,16 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { User } from '@prisma/client';
 
+import { CurrentUser } from '../auth/auth.decorators';
+import { GqlAuthGuard } from '../auth/gql.guard';
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { UpdateTransactionInput } from './dto/update-transaction.input';
 import { Transaction } from './entities/transaction.entity';
 import { TransactionsService } from './transactions.service';
 
 @Resolver(() => Transaction)
+@UseGuards(GqlAuthGuard)
 export class TransactionsResolver {
 	constructor(private readonly transactionsService: TransactionsService) {}
 
@@ -13,8 +18,9 @@ export class TransactionsResolver {
 	async createTransaction(
 		@Args('createTransactionInput')
 		createTransactionInput: CreateTransactionInput,
+		@CurrentUser() user: User,
 	) {
-		return this.transactionsService.create(createTransactionInput);
+		return this.transactionsService.create(createTransactionInput, user);
 	}
 
 	@Query(() => [Transaction], { name: 'transactions' })

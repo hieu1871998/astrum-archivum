@@ -1,0 +1,122 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table accounts {
+  id String [pk]
+  user users [not null]
+  userId String [not null]
+  name String [not null]
+  type AccountType [not null]
+  currency Currency [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  transactions transactions [not null]
+}
+
+Table budgets {
+  id String [pk]
+  user users [not null]
+  userId String [not null]
+  category categories [not null]
+  categoryId String [not null]
+  periodStart DateTime [not null]
+  periodEnd DateTime [not null]
+  limit Float [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table categories {
+  id String [pk]
+  name String [not null]
+  icon String
+  color String
+  parentCategory categories
+  parentCategoryId String
+  subcategories categories [not null]
+  transactions transactions [not null]
+  Budget budgets [not null]
+}
+
+Table tags {
+  id String [pk]
+  name String [not null]
+  transactions transactions [not null]
+  transactionIds String[] [not null]
+}
+
+Table transactions {
+  id String [pk]
+  account accounts [not null]
+  accountId String [not null]
+  user users [not null]
+  userId String [not null]
+  amount Float [not null]
+  currency Currency [not null]
+  type TransactionType [not null]
+  description String
+  notes String
+  customIcon String
+  date DateTime [not null]
+  recurrence RecurrenceType [not null, default: 'OFF']
+  category categories
+  categoryId String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  tagIds String[] [not null]
+  tags tags [not null]
+}
+
+Table users {
+  id String [pk]
+  email String [unique, not null]
+  name String
+  password String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  accounts accounts [not null]
+  transactions transactions [not null]
+  budgets budgets [not null]
+}
+
+Enum AccountType {
+  BANK
+  CREDIT
+  WALLET
+}
+
+Enum Currency {
+  VND
+  USD
+}
+
+Enum TransactionType {
+  INCOME
+  EXPENSE
+  TRANSFER
+}
+
+Enum RecurrenceType {
+  OFF
+  REPEAT
+  INSTALLMENT
+}
+
+Ref: accounts.userId > users.id
+
+Ref: budgets.userId > users.id
+
+Ref: budgets.categoryId > categories.id
+
+Ref: categories.parentCategoryId - categories.id [delete: No Action]
+
+Ref: tags.transactionIds > transactions.id
+
+Ref: transactions.accountId > accounts.id
+
+Ref: transactions.userId > users.id
+
+Ref: transactions.categoryId > categories.id
+
+Ref: transactions.tagIds > tags.id

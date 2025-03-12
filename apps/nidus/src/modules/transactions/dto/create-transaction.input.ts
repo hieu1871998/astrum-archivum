@@ -1,18 +1,15 @@
 import { Field, Float, InputType } from '@nestjs/graphql';
 import {
-	AccountType,
 	Currency,
 	Prisma,
 	RecurrenceType,
 	TransactionType,
 } from '@prisma/client';
 
-import { CreateUserInput } from '@/modules/users/dto/create-user.input';
-
 @InputType()
 export class CreateTransactionInput implements Prisma.TransactionCreateInput {
-	@Field(() => AccountType)
-	account: Prisma.AccountCreateNestedOneWithoutTransactionsInput;
+	@Field(() => String)
+	accountId: string;
 
 	@Field(() => Float)
 	amount: number;
@@ -41,7 +38,8 @@ export class CreateTransactionInput implements Prisma.TransactionCreateInput {
 	@Field(() => TransactionType)
 	type: TransactionType;
 
-	@Field(() => CreateUserInput)
+	account: Prisma.AccountCreateNestedOneWithoutTransactionsInput;
+
 	user: Prisma.UserCreateNestedOneWithoutTransactionsInput;
 }
 

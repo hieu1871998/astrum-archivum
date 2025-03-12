@@ -18,6 +18,8 @@ async function bootstrap() {
 	});
 	const loggerService = new Logger('BOOTSTRAP');
 
+	loggerService.log('Nidus is starting...');
+
 	if (module.hot) {
 		module.hot.accept();
 		module.hot.dispose(() => app.close());

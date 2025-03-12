@@ -14,3 +14,7 @@ generator zod {
   useMultipleFiles = false
   withBarrelFiles  = false
 }
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}

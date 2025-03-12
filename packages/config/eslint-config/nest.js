@@ -16,7 +16,7 @@ export const nestConfig = [
 				...globals.node,
 				...globals.jest,
 			},
-			ecmaVersion: 5,
+			ecmaVersion: 'latest',
 			sourceType: 'module',
 			parserOptions: {
 				projectService: true,
@@ -32,6 +32,7 @@ export const nestConfig = [
 	},
 	{
 		rules: {
+			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/no-floating-promises': 'warn',
 			'@typescript-eslint/no-unsafe-argument': 'warn',
 			'@typescript-eslint/no-extraneous-class': 'off',

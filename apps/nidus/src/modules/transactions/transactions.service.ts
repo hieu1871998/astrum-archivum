@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
 
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { UpdateTransactionInput } from './dto/update-transaction.input';
@@ -9,9 +10,23 @@ import { PrismaService } from '@/common/prisma/prisma.service';
 export class TransactionsService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async create(createTransactionInput: CreateTransactionInput) {
+	async create(createTransactionInput: CreateTransactionInput, user: User) {
+		const { accountId, ...input } = createTransactionInput;
+
 		return this.prisma.transaction.create({
-			data: createTransactionInput,
+			data: {
+				...input,
+				account: {
+					connect: {
+						id: accountId,
+					},
+				},
+				user: {
+					connect: {
+						id: user.id,
+					},
+				},
+			},
 		});
 	}
 
@@ -24,9 +39,11 @@ export class TransactionsService {
 	}
 
 	async update(id: string, updateTransactionInput: UpdateTransactionInput) {
+		const { accountId: _accountId, ...input } = updateTransactionInput;
+
 		return this.prisma.transaction.update({
 			where: { id },
-			data: updateTransactionInput,
+			data: input,
 		});
 	}
 

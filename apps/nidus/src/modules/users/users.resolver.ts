@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import {
 	Args,
 	ID,
@@ -9,6 +10,8 @@ import {
 } from '@nestjs/graphql';
 
 import { AccountsService } from '../accounts/accounts.service';
+import { CurrentUser } from '../auth/auth.decorators';
+import { GqlAuthGuard } from '../auth/gql.guard';
 import { TransactionsService } from '../transactions/transactions.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -16,6 +19,7 @@ import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 
 @Resolver(() => User)
+@UseGuards(GqlAuthGuard)
 export class UsersResolver {
 	constructor(
 		private readonly usersService: UsersService,
@@ -39,6 +43,11 @@ export class UsersResolver {
 	@Query(() => User, { name: 'user' })
 	async findOne(@Args('id', { type: () => ID }) id: string) {
 		return this.usersService.findOne(id);
+	}
+
+	@Query(() => User, { name: 'userByEmail' })
+	async findOneByEmail(@Args('email') email: string) {
+		return this.usersService.findOneByEmail(email);
 	}
 
 	@Mutation(() => User)
@@ -66,5 +75,10 @@ export class UsersResolver {
 		const { id } = user;
 
 		return this.transactionsService.findAllByUserId(id);
+	}
+
+	@Query(() => User)
+	async me(@CurrentUser() user: User) {
+		return this.usersService.findOne(user.id);
 	}
 }

@@ -5,6 +5,7 @@
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build", "db:generate"],
+			"env": ["JWT_SECRET", "DATABASE_URL", "PORT"],
 			"inputs": ["$TURBO_DEFAULT$", ".env*"],
 			"outputs": [".next/**", "!.next/cache/**", "dist"]
 		},
@@ -30,15 +31,16 @@
 		},
 		"dev": {
 			"cache": false,
+			"env": ["JWT_SECRET", "DATABASE_URL", "PORT"],
 			"persistent": true
 		},
 		"lint": {
 			"dependsOn": ["^lint"],
-			"env": ["PORT"]
+			"env": ["JWT_SECRET", "DATABASE_URL", "PORT"]
 		},
 		"lint:fix": {
 			"dependsOn": ["^lint:fix"],
-			"env": ["PORT"]
+			"env": ["JWT_SECRET", "DATABASE_URL", "PORT"]
 		},
 		"nest:generate": {
 			"cache": false

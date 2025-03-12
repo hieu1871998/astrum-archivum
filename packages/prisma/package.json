@@ -15,13 +15,12 @@
 		"db:migrate:dev": "prisma migrate dev",
 		"db:push": "prisma db push",
 		"db:seed": "tsx src/seed.ts",
-		"predev": "npm run generate",
+		"predev": "pnpm db:generate",
 		"dev": "tsup src/* --watch",
 		"format": "prisma format",
-		"postinstall": "pnpm db:generate",
 		"lint": "eslint . --max-warnings 0",
 		"lint:fix": "pnpm lint --fix",
-		"prebuild": "npm run generate",
+		"prebuild": "pnpm db:generate",
 		"studio": "prisma studio"
 	},
 	"dependencies": {

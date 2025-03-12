@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import {
 	Args,
 	ID,
@@ -7,7 +8,10 @@ import {
 	ResolveField,
 	Resolver,
 } from '@nestjs/graphql';
+import { User } from '@prisma/client';
 
+import { CurrentUser } from '../auth/auth.decorators';
+import { GqlAuthGuard } from '../auth/gql.guard';
 import { Transaction } from '../transactions/entities/transaction.entity';
 import { TransactionsService } from '../transactions/transactions.service';
 import { AccountsService } from './accounts.service';
@@ -16,6 +20,7 @@ import { UpdateAccountInput } from './dto/update-account.input';
 import { Account } from './entities/account.entity';
 
 @Resolver(() => Account)
+@UseGuards(GqlAuthGuard)
 export class AccountsResolver {
 	constructor(
 		private readonly accountsService: AccountsService,
@@ -26,7 +31,14 @@ export class AccountsResolver {
 	async createAccount(
 		@Args('createAccountInput', { type: () => CreateAccountInput })
 		createAccountInput: CreateAccountInput,
+		@CurrentUser() user: User,
 	) {
+		createAccountInput.user = {
+			connect: {
+				id: user.id,
+			},
+		};
+
 		return this.accountsService.create(createAccountInput);
 	}
 

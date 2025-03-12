@@ -138,6 +138,8 @@ type User {
 type Query {
   users: [User!]!
   user(id: ID!): User!
+  userByEmail(email: String!): User!
+  me: User!
   accounts: [Account!]!
   account(id: ID!): Account!
   transactions: [Transaction!]!
@@ -190,7 +192,7 @@ input UpdateAccountInput {
 }
 
 input CreateTransactionInput {
-  account: AccountType!
+  accountId: String!
   amount: Float!
   category: CreateCategoryInput!
   currency: Currency!
@@ -200,7 +202,6 @@ input CreateTransactionInput {
   notes: String
   recurrence: RecurrenceType!
   type: TransactionType!
-  user: CreateUserInput!
 }
 
 input CreateCategoryInput {
@@ -209,7 +210,7 @@ input CreateCategoryInput {
 }
 
 input UpdateTransactionInput {
-  account: AccountType
+  accountId: String
   amount: Float
   category: CreateCategoryInput
   currency: Currency
@@ -219,7 +220,6 @@ input UpdateTransactionInput {
   notes: String
   recurrence: RecurrenceType
   type: TransactionType
-  user: CreateUserInput
   id: String!
 }
 

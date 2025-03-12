@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 import { PrismaService } from '@/common/prisma/prisma.service';
 
@@ -8,9 +9,21 @@ export class UsersService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async create(userCreateInput: Prisma.UserCreateInput) {
-		return this.prisma.user.create({
-			data: userCreateInput,
-		});
+		try {
+			const user = await this.prisma.user.create({
+				data: userCreateInput,
+			});
+
+			return user;
+		} catch (error) {
+			if (error instanceof PrismaClientKnownRequestError) {
+				if (error.code === 'P2002') {
+					throw new BadRequestException('Email already exists');
+				}
+			}
+
+			throw new BadRequestException(error);
+		}
 	}
 
 	async findAll() {
@@ -30,5 +43,11 @@ export class UsersService {
 
 	async remove(id: string) {
 		return this.prisma.user.delete({ where: { id } });
+	}
+
+	async findOneByEmail(email: string) {
+		return this.prisma.user.findUnique({
+			where: { email },
+		});
 	}
 }
