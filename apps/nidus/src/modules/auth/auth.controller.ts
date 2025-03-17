@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 
 import { RequestWithUser } from './auth.interfaces';
 import { AuthService } from './auth.service';
@@ -10,6 +10,7 @@ export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post('login')
+	@HttpCode(HttpStatus.OK)
 	@UseGuards(LocalAuthGuard)
 	async login(@Request() req: RequestWithUser) {
 		return this.authService.login(req.user);
@@ -17,9 +18,7 @@ export class AuthController {
 
 	@Post('auth/logout')
 	@UseGuards(LocalAuthGuard)
-	async logout(
-		@Request() req: RequestWithUser & { logout: () => Promise<void> },
-	) {
+	async logout(@Request() req: RequestWithUser & { logout: () => Promise<void> }) {
 		return req.logout();
 	}
 
